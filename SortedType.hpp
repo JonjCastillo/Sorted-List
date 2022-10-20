@@ -1,14 +1,14 @@
 #ifndef SORTEDTYPE_HPP
 #define SORTEDTYPE_HPP
 
-#include "StudentType.hpp"
+#include "ClientType.hpp"
 #include <iostream>
 using namespace std;
 // Header file for Sorted List ADT.
 struct NodeType;
 
 struct NodeType {
-    StudentType* info;
+    ClientType* info;
     NodeType* next;
 };
 
@@ -21,12 +21,12 @@ public:
   bool IsFull() const;
   int  GetLength() const;
   void MakeEmpty();
-  StudentType* GetItem(StudentType* item, bool& found);
-  void PutItem(StudentType* item);
-  void PutItemUnsorted(StudentType* item);
+  ClientType* GetItem(ClientType* item, bool& found);
+  void PutItem(ClientType* item);
+  void PutItemUnsorted(ClientType* item);
   void DeleteItem(int key);
   void ResetList();
-  StudentType* GetNextItem();
+  ClientType* GetNextItem();
   NodeType* sortList(NodeType* head);
   NodeType* getHead();
 
@@ -83,7 +83,7 @@ void SortedType::MakeEmpty() {
 //                                 Set item to location->info
 //          case LESS     :        Set moreToSearch to false
 // return item
-StudentType* SortedType::GetItem(StudentType* item, bool& found) {
+ClientType* SortedType::GetItem(ClientType* item, bool& found) {
    bool moreToSearch;
    NodeType* location;
 
@@ -126,7 +126,7 @@ StudentType* SortedType::GetItem(StudentType* item, bool& found) {
 // Set predLoc->next to newNode
 // Increment length
 
-void SortedType::PutItem(StudentType* item)
+void SortedType::PutItem(ClientType* item)
 {
   NodeType* newNode;  // pointer to node being inserted
   NodeType* predLoc;  // trailing pointer
@@ -172,16 +172,16 @@ void SortedType::PutItem(StudentType* item)
 
 //method to place an unsorted list
 
-void SortedType::PutItemUnsorted(StudentType* item) {
+// void SortedType::PutItemUnsorted(ClientType* item) {
 
-  NodeType* newNode;
-  newNode = new NodeType;
-  newNode->info = item;
-  /* listData = newNode; */
-  newNode->next = listData;
-  listData = newNode; 
-  length++;
-}
+//   NodeType* newNode;
+//   newNode = new NodeType;
+//   newNode->info = item;
+//   /* listData = newNode; */
+//   newNode->next = listData;
+//   listData = newNode; 
+//   length++;
+// }
 
 
 // Initialize location to position of first item
@@ -222,9 +222,9 @@ void SortedType::ResetList()
   currentPos = NULL;
 }
 
-StudentType* SortedType::GetNextItem()
+ClientType* SortedType::GetNextItem()
 {
-  StudentType* item;
+  ClientType* item;
   if (currentPos == NULL) {
     currentPos = listData;
   }
@@ -249,69 +249,5 @@ NodeType* SortedType::getHead() {
   return listData;
 }
 
-NodeType* SortedType::sortList(NodeType* head) {
-    //If List Contain a Single or 0 Node
-    if(head == NULL || head ->next == NULL) {
-      return head;
-    }
-    
-    
-    NodeType *temp = NULL;
-    NodeType *slow = head;
-    NodeType *fast = head;
-    
-    // 2 pointer appraoach / turtle-hare Algorithm (Finding the middle element)
-    while(fast !=  NULL && fast -> next != NULL)
-    {
-        temp = slow;
-        slow = slow->next;          //slow increment by 1
-        fast = fast ->next ->next;  //fast incremented by 2
-        
-    }   
-    temp -> next = NULL;            //end of first left half
-    
-    NodeType* l1 = sortList(head);    //left half recursive call
-    NodeType* l2 = sortList(slow);    //right half recursive call
-    
-    return mergeList(l1, l2);         //mergeList Function call
-        
-}
-    
-    //MergeSort Function O(n*logn)
-NodeType* SortedType::mergeList(NodeType *l1, NodeType *l2) {
-    NodeType *ptr = new NodeType;
-    NodeType *curr = ptr;
-    
-    while(l1 != NULL && l2 != NULL)
-    {
-        if(l1->info->getID() <= l2->info->getID())
-        {
-            curr -> next = l1;
-            l1 = l1 -> next;
-        }
-        else
-        {
-            curr -> next = l2;
-            l2 = l2 -> next;
-        }
-    
-    curr = curr ->next;
-    }
-    
-    //for unequal length linked list
-    if(l1 != NULL)
-    {
-        curr -> next = l1;
-        l1 = l1->next;
-    }
-    
-    if(l2 != NULL)
-    {
-        curr -> next = l2;
-        l2 = l2 ->next;
-    }
-    
-    return ptr->next;
-}
 
 #endif
