@@ -21,13 +21,13 @@ public:
   bool IsFull() const;
   int  GetLength() const;
   void MakeEmpty();
-  ClientType* GetItem(ClientType* item, bool& found);
+  ClientType* GetItem(int key);
   void PutItem(ClientType* item);
   void PutItemUnsorted(ClientType* item);
   void DeleteItem(int key);
   void ResetList();
+  void UpdateItem(int key, double balance, string name);
   ClientType* GetNextItem();
-  NodeType* sortList(NodeType* head);
   NodeType* getHead();
 
 private:
@@ -35,7 +35,7 @@ private:
    int length;
    NodeType* currentPos;
 
-   NodeType* mergeList(NodeType* l1, NodeType* l2);
+
 };
 
 
@@ -83,32 +83,28 @@ void SortedType::MakeEmpty() {
 //                                 Set item to location->info
 //          case LESS     :        Set moreToSearch to false
 // return item
-ClientType* SortedType::GetItem(ClientType* item, bool& found) {
-   bool moreToSearch;
-   NodeType* location;
+ClientType* SortedType::GetItem(int key) {
+  bool moreToSearch;
+  NodeType* location;
+  NodeType* tempLocation;
+  ClientType* item;
 
-   location = listData;
-   found = false;
-   moreToSearch = (location != NULL);
+  location = listData;
+  moreToSearch = (location != NULL);
+  if ( key == location->info->getID() ) {
+    item = location->info;
+    return item;
+  }
+  else {
+    while (key != location->next->info->getID()) {
+      location = location->next;
+      item = NULL;
+    }
 
-   while (moreToSearch && !found) {
+    item = location->next->info;
+  }
 
-      switch ( item->ComparedTo( location->info ) ) {
-      case GREATER: 
-         location = location->next;
-         moreToSearch = (location != NULL);
-         break;
-      case EQUAL:   
-         found = true;
-         item = location->info;
-         break;
-      case LESS:    
-         moreToSearch = false;
-         break;
-      }
-   }
-
-   return item;
+  return item;
 }
 
 // Set location to listData
@@ -243,6 +239,29 @@ SortedType::~SortedType()
     listData = listData->next;
     delete tempPtr;
   }
+}
+
+void SortedType::UpdateItem(int key, double balance, string name) {
+  bool moreToSearch;
+  NodeType* location;
+  NodeType* tempLocation;
+
+  location = listData;
+  moreToSearch = (location->next != NULL);
+
+  if ( key == location->info->getID() ) {
+    location->info->setBalance(balance);
+    location->info->setName(name); 
+  }
+  else {
+    while (key != location->next->info->getID()) {
+      location = location->next;
+    }
+
+    location->next->info->setBalance(balance);
+    location->next->info->setName(name);
+  }
+  
 }
 
 NodeType* SortedType::getHead() {

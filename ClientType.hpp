@@ -22,6 +22,9 @@ class ClientType {
       int id;
       string name;
       double balance;
+
+      //mutators
+
       
    public:
       ClientType();
@@ -31,11 +34,11 @@ class ClientType {
       int getID() const;
       string getName() const;
       double getBalance() const;
-
-      //mutators
       void setName(string name);
       void setBalance(double balance);
       RelationType ComparedTo(ClientType* item);
+
+
 
 };
 
