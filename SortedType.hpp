@@ -44,6 +44,8 @@ SortedType::SortedType() {  // Class constructor
   listData = NULL;
 }
 
+//checks to see if there is enough memory to add another 
+//node to the list.
 bool SortedType::IsFull() const {
    NodeType* location;
    try {
@@ -56,10 +58,12 @@ bool SortedType::IsFull() const {
    }
 }
 
+//return the length of the list
 int SortedType::GetLength() const {
    return length;
 }
 
+//method empties out the list
 void SortedType::MakeEmpty() {
   NodeType* tempPtr;
 
@@ -83,6 +87,13 @@ void SortedType::MakeEmpty() {
 //                                 Set item to location->info
 //          case LESS     :        Set moreToSearch to false
 // return item
+/**
+ * @brief this method returns the account found by its ID
+ * it searches through the list until it finds the node.
+ * 
+ * @param key the id of the list
+ * @return ClientType* the account that correlated to the ID
+ */
 ClientType* SortedType::GetItem(int key) {
   bool moreToSearch;
   NodeType* location;
@@ -121,7 +132,13 @@ ClientType* SortedType::GetItem(int key) {
 // Set newNode->next to location
 // Set predLoc->next to newNode
 // Increment length
-
+/**
+ * @brief this method adds an item to the list sorted by its ID
+ * the method will first compare to see where the node must be inserted, 
+ * then will proceed to insert the node at that point and increment the total length of the list
+ * 
+ * @param item the account that is being added.
+ */
 void SortedType::PutItem(ClientType* item)
 {
   NodeType* newNode;  // pointer to node being inserted
@@ -166,19 +183,6 @@ void SortedType::PutItem(ClientType* item)
   length++;
 }
 
-//method to place an unsorted list
-
-// void SortedType::PutItemUnsorted(ClientType* item) {
-
-//   NodeType* newNode;
-//   newNode = new NodeType;
-//   newNode->info = item;
-//   /* listData = newNode; */
-//   newNode->next = listData;
-//   listData = newNode; 
-//   length++;
-// }
-
 
 // Initialize location to position of first item
 // Set found to false
@@ -190,6 +194,13 @@ void SortedType::PutItem(ClientType* item)
 // for index going from location + 1 TO length – 1
 //      Set Info(index – 1) to Info(index)
 // Decrement length
+/**
+ * @brief this method finds the specified account by its ID
+ * and then deletes it by removing the node and setting the pointer of the previous node 
+ * to the following node of the list.
+ * 
+ * @param key this is the ID of the account
+ */
 void SortedType::DeleteItem(int key)
 {
   NodeType* location = listData;
@@ -218,6 +229,11 @@ void SortedType::ResetList()
   currentPos = NULL;
 }
 
+/**
+ * @brief returns the next item in the list
+ * 
+ * @return ClientType* the client that followed in the list
+ */
 ClientType* SortedType::GetNextItem()
 {
   ClientType* item;
@@ -241,6 +257,14 @@ SortedType::~SortedType()
   }
 }
 
+/**
+ * @brief this method will search similar to GetItem() and then update the found
+ * node with the given parameters
+ * 
+ * @param key the account ID for the node
+ * @param balance the updated balance for the account
+ * @param name the updated name for the account
+ */
 void SortedType::UpdateItem(int key, double balance, string name) {
   bool moreToSearch;
   NodeType* location;
@@ -264,6 +288,7 @@ void SortedType::UpdateItem(int key, double balance, string name) {
   
 }
 
+// returns the head of the list
 NodeType* SortedType::getHead() {
   return listData;
 }

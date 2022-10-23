@@ -3,8 +3,8 @@
 #include "ClientType.hpp"
 
 using namespace std;
-void invalidInput();
-void topLevelMenu();
+void invalidInput(); // default text line for invalid input
+void topLevelMenu(); // text line that displays the top level menu prompts
 void Populate(SortedType*);
 void updateAccount(SortedType*);
 void view(SortedType*);
@@ -58,6 +58,13 @@ int main(int argc, char const *argv[]) {
    return 0;
 }
 
+/**
+ * @brief Populate allows you to take in the name, id and balance for the accounts and then inserts them into the list as
+ * a ClientType method, this then uses allows you to add more than one client if desired.
+ * 
+ * @param list take in the generated list as a parameter.
+ */
+
 void Populate(SortedType* list) {
    cout << "-----List Generation-------" << endl;
    int choice = 1;
@@ -84,6 +91,13 @@ void Populate(SortedType* list) {
    }
 }
 
+/**
+ * @brief this method is a second level menu that allows the user to select between viewing a list of 
+ * all the accounts or simply one individual account it will then call the appropriate function passing the list 
+ * as its parameter.
+ * 
+ * @param list 
+ */
 void view(SortedType* list) {
    int option;
    bool isValid = false;
@@ -108,6 +122,11 @@ void view(SortedType* list) {
    
 } 
 
+/**
+ * @brief this method generates a printed view of the entire list. passing through each node of the list and getting its contents.
+ * 
+ * @param list the sorted list that was generated.
+ */
 void viewList(SortedType* list) {
    list->ResetList();
    for (int i = 0; i < list->GetLength(); i++ )
@@ -119,6 +138,12 @@ void viewList(SortedType* list) {
    }
 }
 
+/**
+ * @brief this method allows the user to search for an individual account by ID
+ * and then returns the account found
+ * 
+ * @param list the linked list
+ */
 void viewIndividual(SortedType* list) {
    int choice = 0;
    int id;
@@ -140,6 +165,11 @@ void viewIndividual(SortedType* list) {
 
 }
 
+/**
+ * @brief this method allows you to delete an Account by ID
+ * 
+ * @param list the sorted list
+ */
 void deleteItem(SortedType* list) {
    cout << "-------Delete Record from List -------" << endl;
    int id;
@@ -151,6 +181,13 @@ void deleteItem(SortedType* list) {
 
 }
 
+/**
+ * @brief this method allows you to update an account (specified by 
+ * the account ID) it then allows you to verify if the information and account you want to update are 
+ * correct before proceeding with the write process.
+ * 
+ * @param list the sorted list
+ */
 void updateAccount(SortedType* list) {
    cout << "--------Update Records-----------" << endl;
    int id;
@@ -212,6 +249,11 @@ void updateAccount(SortedType* list) {
 
 }
 
+/**
+ * @brief this method prints out the options that the top level
+ * menu offers
+ * 
+ */
 void topLevelMenu() {
     cout << "----Main Menu----\n"
     << "1.\tAdd Accounts\n"
@@ -221,6 +263,10 @@ void topLevelMenu() {
     << "5.\tExit\n";
 }
 
+/**
+ * @brief this is the default output if an invalid input is read
+ * 
+ */
 void invalidInput() {
     cin.clear();
     cin.ignore(256, '\n');
